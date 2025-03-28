@@ -1,29 +1,8 @@
 pub fn main() !void {
-    const args = std.os.argv;
-    const argc = args.len;
-
-    // TODO: Parse args properly
-    if (argc != 2) {
-        std.debug.print("No filename given..\n", .{});
-        return;
-    }
-
-    const fpath: []const u8 = std.mem.span(args[1]);
-    std.debug.print("Filepath{s}\n", .{fpath});
-
-    const extension = futils.getFileExtension(fpath);
-
-    if (extension) |e| {
-        if (utils.eqlString(e, ".dlt")) {
-            std.debug.print("Extension {s}\n\n", .{e});
-        } else {
-            std.debug.print("Not a valid extension...\n", .{});
-            return;
-        }
-    } else {
-        std.debug.print("No extension found ...\n", .{});
-        return;
-    }
+    const args = ArgsParser.parse() catch |err| {
+        std.debug.print("Error parsing cli flags: {any}\n", .{err});
+        return err;
+    };
 
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa.deinit();
@@ -33,7 +12,7 @@ pub fn main() !void {
     //defer allocator.free(inp);
     var timer = try std.time.Timer.start();
 
-    var lexer: Lexer = try .init(fpath, allocator);
+    var lexer: Lexer = try .init(args.fpath, allocator);
     defer lexer.deinit();
 
     const tokens = try lexer.tokenize(allocator);
@@ -45,7 +24,7 @@ pub fn main() !void {
     std.debug.print("Number of tokens: {}\n", .{tokens.len});
     std.debug.print("Tokenize took {d:.2} ms\n", .{elapsed_ms});
 
-    // for (tokens) |token| std.debug.print("{}\n", .{token});
+    for (tokens) |token| std.debug.print("{}\n", .{token});
 }
 
 const std = @import("std");
@@ -55,6 +34,7 @@ const Lexer = lex.Lexer;
 const TokenType = @import("token.zig").TokenType;
 const futils = @import("fileutils.zig");
 const utils = @import("utils.zig");
+const ArgsParser = @import("ArgsParser.zig");
 
 test {
     testing.refAllDecls(@This());
