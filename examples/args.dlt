@@ -1,0 +1,21 @@
+inline add<T> :: (a: T, b: T) {
+    return a + b;
+}
+
+main :: () {
+    args :: os.args;
+    argc :: os.argv;
+
+    f :: string.toI32(args[1]);
+    s :: string.toI32(args[2]);
+
+    print("{d}\n", add<i32>(f,s));
+
+    for i in 0..9 {
+        println("{d}", i);
+    }
+}
+
+import "std";
+import "std/os";
+import "std/string";

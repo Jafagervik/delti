@@ -1,0 +1,6 @@
+main :: () {
+    print("Hello\n");
+    println("World");
+}
+
+#import "std"

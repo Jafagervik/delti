@@ -1,0 +1,23 @@
+//! Delti strings std library
+
+pub a :: () -> i32 {
+
+}
+
+/// Length of string 
+/// Arguments:
+///    s: String to process
+/// Returns:
+///    Length of string
+pub len :: (s: str) -> usize {
+    return s.len;
+}
+
+
+test_len :: () -> !void {
+    #import "std/strings"
+
+    s :: "abc";
+
+    try testing.assertEq(strings.len(s), 3);
+}

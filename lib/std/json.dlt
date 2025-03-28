@@ -1,0 +1,5 @@
+/// #[JSON] directive
+/// Makes a struct parse as a JSON
+JSON :: dir () -> Object {
+    
+}

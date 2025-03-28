@@ -1,0 +1,12 @@
+main :: () {
+    log := Logger.init("", Default.INFO, std.Logger.Endline.NewLine);
+
+    // Or easier
+    log := Logger.init();
+
+    log.info("Hello");
+}
+
+#import "log"
+
+#run main()

@@ -1,0 +1,29 @@
+RGB :: struct {
+    a: i32,
+    b: i32,
+};
+
+Color :: enum {
+    RED,
+    GREEN,
+    BLUE,
+};
+
+add :: inline (a: $T, b: T) -> T {
+    return a + b;
+}
+
+pub MAIN :: 1;
+
+main :: () {
+    f :: 4;
+    s :: 4;
+
+    println("{d}", .{add(f,s)});
+
+    for i in 0..9 {
+        println("{d}", i);
+    }
+}
+
+#import "std"

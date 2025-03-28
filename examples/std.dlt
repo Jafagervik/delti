@@ -1,0 +1,13 @@
+// Everything is in std
+
+#import "std"
+#import "std/math"
+#import "std/os"
+#import "std/posix"
+#import "std/file"
+#import "std/json"
+#import "std/rand"
+#import "std/simd"
+#import "std/thread"
+#import "std/proc"
+#import "std/pstat"

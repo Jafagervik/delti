@@ -1,0 +1,38 @@
+// This will be coments for this file
+// #[JSON] makes the struct ready to use with json
+
+
+#[JSON]
+Data :: struct {
+    name: str,
+    val: i32,
+}
+
+#[JSON]
+Datas :: struct {
+    datas: []Data,
+}
+
+main :: () -> !void {
+    argv :: os.argv;
+    arvc :: argv.len;
+
+    d: usize = ??;
+
+    gpa := std.heap.gpa(.{}){};
+    defer gpa.deinit();
+    allocator :: gpa.allocator();
+
+    getReq :: "https://google.data.api";
+    resp :: try http.get(getReq);
+    datas :: try resp.read(Datas);
+
+    for datas {
+        println("Name : {s}, Value: {d}", .{it.name, it.val});
+    }
+}
+
+#import "std"
+#import "std/json"
+#import "std/http"
+#import "std/os"

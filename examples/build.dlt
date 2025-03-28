@@ -1,0 +1,6 @@
+
+build :: () -> !void {
+    os := std.os.get_current_os();
+
+    exe := get_current_os();
+}

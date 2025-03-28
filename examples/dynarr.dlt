@@ -1,0 +1,12 @@
+main :: () {
+    list := std.DynArr<i32>(10);
+
+    for i in 0..10 {
+        try list.add(allocator, 4);
+    }
+
+    println("{}", .{list});
+    
+}
+
+#import "std"
