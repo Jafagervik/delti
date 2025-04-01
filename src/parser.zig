@@ -1,19 +1,22 @@
 //! parser lezzz go
 
+// =======================
+// Types
+// =======================
+
 const Expr = union(enum) {
     number: i32,
     ident: []const u8,
     binary_op: struct {
-        left: *Expr,
+        left: ?*Expr,
         op: []const u8,
-        right: *Expr,
+        right: ?*Expr,
     },
     call: struct {
         name: []const u8,
         args: []Expr,
     },
 
-    // Optional method to print debug representation
     pub fn format(
         self: @This(),
         comptime _: []const u8,
@@ -54,9 +57,14 @@ pub const Program = struct {
     functions: ?i32,
 };
 
+/// Parser struct containing methods and data a parser would need
+/// Top-down recursive descent parser it is
 pub const Parser = struct {
+    /// Array of all tokens yielded by the lexer
     tokens: []Token,
+    /// Current position
     pos: usize,
+    /// Length of tokens (OPTIONAL)
     n: usize,
 
     const Self = @This();
@@ -87,3 +95,4 @@ const t = @import("token.zig");
 const Token = t.Token;
 const AST = @import("ast.zig").AST;
 const testing = std.testing;
+const BinopPrecedence = @import("binop.zig");

@@ -1,9 +1,15 @@
 /// Reads a file from path into a string buffer
-pub fn readFile(file_path: []const u8, allocator: *std.mem.Allocator) ![]const u8 {
+pub fn readFile(
+    file_path: []const u8,
+    allocator: *std.mem.Allocator,
+) ![]const u8 {
     const file = try std.fs.cwd().openFile(file_path, .{ .mode = .read_only });
     defer file.close();
     const file_size = try file.getEndPos();
-    const buffer = try allocator.alloc(u8, file_size);
+    const buffer = allocator.alloc(u8, file_size) catch |err| {
+        std.debug.print("Could not allocate buffer: {any}", .{err});
+        return error.OutOfMemory;
+    };
     _ = try file.readAll(buffer);
     return buffer;
 }

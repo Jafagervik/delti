@@ -20,9 +20,9 @@ pub const Lexer = struct {
     const Self = @This();
 
     /// Initialize this shait
-    pub fn init(filepath: []const u8, allocator: std.mem.Allocator) !Self {
-        const data: []const u8 = fu.readFile(filepath, &allocator);
-        return Self{ .filepath = filepath, .data = data, .n = data.len, .gpa = allocator };
+    pub fn init(filepath: []const u8, allocator: *std.mem.Allocator) !Self {
+        const data: []const u8 = try fu.readFile(filepath, allocator);
+        return Self{ .filepath = filepath, .data = data, .n = data.len, .gpa = allocator.* };
     }
 
     /// Deinits the Lexer type
@@ -34,8 +34,9 @@ pub const Lexer = struct {
     /// Tokenize data from a string
     pub fn tokenize(
         self: *Self,
+        allocator: *std.mem.Allocator,
     ) error{OutOfMemory}![]Token {
-        var tokens = std.ArrayList(Token).init(self.allocator);
+        var tokens = std.ArrayList(Token).init(allocator.*);
 
         // Tokenizer using labeled switch
         sw: switch (self.currChar()) {

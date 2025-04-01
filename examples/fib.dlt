@@ -1,0 +1,8 @@
+
+fib :: (comptime T: type, n: T) -> T {
+    return switch (n) {
+        0 => 0,
+        1 => 1,
+        else => fib(n-1) + fib(n-2),
+    };
+}

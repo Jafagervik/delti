@@ -204,6 +204,9 @@ const TokenType = t.TokenType;
 const Token = t.Token;
 // ================================
 
+// ================================
+// Tests
+// ================================
 test "Tokenize" {
     const allocator = std.testing.allocator;
     const input = "88 + 921234 - 5 * 2 / 2 ";
